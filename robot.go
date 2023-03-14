@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"net/http"
+	"regexp"
 	"sigs.k8s.io/yaml"
 	"strings"
 )
@@ -340,6 +341,12 @@ func (bot *robot) findSpecialContact(org, repo string, number int32, cfg *botCon
 			for _, ff := range f.Path {
 				if strings.Contains(c.Filename, ff) {
 					mo = append(mo, f.Owner...)
+				}
+				if strings.Contains(ff, "/*/") {
+					reg := regexp.MustCompile(strings.Replace(ff, "/*/", "/[^\\s]+/", -1))
+					if ok := reg.MatchString(c.Filename); ok {
+						mo = append(mo, f.Owner...)
+					}
 				}
 			}
 		}
