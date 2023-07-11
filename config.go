@@ -79,6 +79,9 @@ type botConfig struct {
 	// WelcomeSimpler means to make the welcome message simpler when PR is opened
 	WelcomeSimpler bool `json:"welcome_simpler,omitempty"`
 
+	// NoNeedToNotice means that no need to @ maintainers and committers in welcome message
+	NoNeedToNotice bool `json:"no_need_to_notice,omitempty"`
+
 	// reposSig is used to cache information
 	reposSig map[string]string
 }
